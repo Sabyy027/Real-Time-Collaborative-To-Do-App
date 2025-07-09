@@ -6,6 +6,12 @@ A full-stack MERN application that allows multiple users to collaborate on a sha
 
 -   Deployed App: https://todoboardsabeer.netlify.app
 -   Demo Video: [Your Video Link Here]
+  
+## Deployment Notes
+
+During the deployment of the backend, I encountered persistent platform-specific build errors with the initial cloud hosting service. To ensure a stable and fully functional live demo, the backend is being served from a local environment and exposed publicly and securely via an ngrok tunnel. The frontend is fully deployed on Netlify.
+
+**To test the live application, the local backend and the ngrok tunnel must be running.**
 
 ## Tech Stack
 
