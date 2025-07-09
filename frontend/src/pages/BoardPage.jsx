@@ -7,7 +7,7 @@ import Board from '../components/Board';
 import CreateTaskForm from '../components/CreateTaskForm';
 import ActivityLog from '../components/ActivityLog';
 
-const socket = io(import.meta.env.VITE_API_URL);
+const socket = io('http://localhost:5000');
 
 const BoardPage = () => {
   const { logout } = useContext(AuthContext);
@@ -20,10 +20,15 @@ const BoardPage = () => {
     const fetchInitialData = async () => {
       try {
         const [tasksRes, logsRes, usersRes] = await Promise.all([getTasks(), getActionLogs(), getAllUsers()]);
-        setTasks(tasksRes.data);
-        setLogs(logsRes.data);
-        setUsers(usersRes.data);
-      } catch (error) { console.error("Failed to fetch initial data", error); }
+        setTasks(Array.isArray(tasksRes.data) ? tasksRes.data : []);
+        setLogs(Array.isArray(logsRes.data) ? logsRes.data : []);
+        setUsers(Array.isArray(usersRes.data) ? usersRes.data : []);
+      } catch (error) {
+        setTasks([]);
+        setLogs([]);
+        setUsers([]);
+        console.error("Failed to fetch initial data", error);
+      }
     };
     fetchInitialData();
 

@@ -11,14 +11,19 @@ dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
+
+// --- THIS IS THE FIX ---
+// We are updating the cors options to allow any origin.
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "*", // Allow any origin for WebSockets
     methods: ["GET", "POST", "PUT", "DELETE"]
   }
 });
 
-app.use(cors({ origin: "http://localhost:5173", methods: ["GET", "POST", "PUT", "DELETE"] }));
+app.use(cors()); // This now allows all origins for standard API requests (GET, POST, etc.)
+// ----------------------
+
 app.use(express.json());
 
 app.use((req, res, next) => {
