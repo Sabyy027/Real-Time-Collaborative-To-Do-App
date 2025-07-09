@@ -5,13 +5,17 @@ A full-stack MERN application that allows multiple users to collaborate on a sha
 ## Live Links
 
 -   Deployed App: https://todoboardsabeer.netlify.app
--   Demo Video: [Your Video Link Here]
+-   Demo Video: https://drive.google.com/file/d/1WLMxTGem1T2jsg_wGPkipOxEGPDzRCH-/view?usp=sharing
   
 ## Deployment Notes
 
 During the deployment of the backend, I encountered persistent platform-specific build errors with the initial cloud hosting service. To ensure a stable and fully functional live demo, the backend is being served from a local environment and exposed publicly and securely via an ngrok tunnel. The frontend is fully deployed on Netlify.
 
 **To test the live application, the local backend and the ngrok tunnel must be running.**
+In case the live website is not working (due to the local backend server being hosted via an ngrok tunnel),
+you can contact me at:
+📞 +91 63807 17436
+📧 sabeeranwermeeran@gmail.com
 
 ## Tech Stack
 
