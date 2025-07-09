@@ -4,22 +4,22 @@ import { login as loginApi, register as registerApi } from '../services/api';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState(sessionStorage.getItem('token'));
 
   const login = async (username, password) => {
     const { data } = await loginApi({ username, password });
-    localStorage.setItem('token', data.token);
+    sessionStorage.setItem('token', data.token);
     setToken(data.token);
   };
 
   const register = async (username, password) => {
     const { data } = await registerApi({ username, password });
-    localStorage.setItem('token', data.token);
+    sessionStorage.setItem('token', data.token);
     setToken(data.token);
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     setToken(null);
   };
 
