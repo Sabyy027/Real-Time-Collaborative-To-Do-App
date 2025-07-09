@@ -13,77 +13,6 @@ body {
   color: #1a202c;
 }
 
-body.dark {
-  background-color: #181a1b !important;
-  color: #e2e8f0 !important;
-}
-body.dark .app-container,
-body.dark .create-task-container,
-body.dark .board-column,
-body.dark .activity-log-panel {
-  background: #23272f !important;
-  color: #e2e8f0 !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-}
-body.dark .task-card {
-  background: #23272f !important;
-  color: #e2e8f0 !important;
-  border-color: #2d3748 !important;
-}
-body.dark .task-card h4,
-body.dark .board-column h2,
-body.dark .activity-log-panel h3 {
-  color: #f6f6f6 !important;
-}
-body.dark .priority.high { background: #ffb3b3; color: #c0392b; }
-body.dark .priority.medium { background: #ffe29a; color: #e67e22; }
-body.dark .priority.low { background: #b3ffd8; color: #27ae60; }
-body.dark .assignee-avatar {
-  background: linear-gradient(135deg, #2d3748 0%, #4299e1 100%) !important;
-  box-shadow: 0 2px 8px rgba(66,153,225,0.10);
-}
-body.dark .logout-btn,
-body.dark .submit-btn,
-body.dark .smart-assign-btn,
-body.dark .btn-trending {
-  background: linear-gradient(90deg, #23272f 0%, #4299e1 100%) !important;
-  color: #fff !important;
-  border: none;
-}
-body.dark .create-task-form input,
-body.dark .create-task-form textarea,
-body.dark .create-task-form select {
-  background: #23272f !important;
-  color: #e2e8f0 !important;
-  border: 1px solid #2d3748 !important;
-}
-body.dark .create-task-form input::placeholder,
-body.dark .create-task-form textarea::placeholder {
-  color: #a0aec0 !important;
-}
-body.dark .assignee-dropdown,
-body.dark .dots-anim,
-body.dark .memo-anim,
-body.dark .thumbs-up-anim {
-  background: #23272f !important;
-  color: #e2e8f0 !important;
-  border-color: #2d3748 !important;
-}
-
-.dark-toggle-btn {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  z-index: 200;
-  background: none;
-  border: none;
-  font-size: 1.7rem;
-  cursor: pointer;
-  transition: filter 0.2s;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
-}
-.dark-toggle-btn:focus { outline: 2px solid #4299e1; }
-
 .app-container {
   padding: 20px 40px;
   padding-bottom: 60px; /* Prevent content from being hidden behind the fixed footer */
@@ -461,8 +390,4 @@ h1 {
   letter-spacing: 0.01em;
   font-weight: 500;
   box-shadow: 0 -2px 12px rgba(0,0,0,0.04);
-}
-body.dark .footer-blur {
-  background: rgba(24,26,27,0.65);
-  color: #e2e8f0;
 }

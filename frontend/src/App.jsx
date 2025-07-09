@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
 import AuthPage from './pages/AuthPage';
@@ -12,24 +12,9 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   const { token } = useContext(AuthContext);
-  const [darkMode, setDarkMode] = useState(() => {
-    const stored = localStorage.getItem('darkMode');
-    if (stored !== null) return stored === 'true';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  });
-
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add('dark');
-    } else {
-      document.body.classList.remove('dark');
-    }
-    localStorage.setItem('darkMode', darkMode);
-  }, [darkMode]);
 
   return (
     <Router>
-      {/* Dark mode toggle button removed */}
       <div className="app-container">
         <Routes>
           <Route path="/" element={token ? <Navigate to="/board" /> : <Navigate to="/login" />} />
