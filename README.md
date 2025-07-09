@@ -14,7 +14,7 @@ During the deployment of the backend, I encountered persistent platform-specific
 **To test the live application, the local backend and the ngrok tunnel must be running.**
 In case the live website is not working (due to the local backend server being hosted via an ngrok tunnel),
 you can contact me at:
-📞 +91 63807 17436
+📞 +91 6380717436
 📧 sabeeranwermeeran@gmail.com
 
 ## Tech Stack
