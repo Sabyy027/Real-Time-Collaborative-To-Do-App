@@ -1,13 +1,13 @@
-import express from 'express';
-import { protect } from '../middleware/authMiddleware.js';
-import {
+const express = require('express');
+const { protect } = require('../middleware/authMiddleware.js');
+const {
   getTasks,
   createTask,
   updateTask,
   deleteTask,
   getActionLogs,
   smartAssignTask
-} from '../controllers/taskController.js';
+} = require('../controllers/taskController.js');
 
 const router = express.Router();
 
@@ -16,4 +16,4 @@ router.route('/logs').get(protect, getActionLogs);
 router.route('/:id/smart-assign').post(protect, smartAssignTask);
 router.route('/:id').put(protect, updateTask).delete(protect, deleteTask);
 
-export default router;
+module.exports = router;

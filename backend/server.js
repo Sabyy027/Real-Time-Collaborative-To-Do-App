@@ -1,11 +1,11 @@
-import express from 'express';
-import http from 'http';
-import { Server } from 'socket.io';
-import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import userRoutes from './routes/userRoutes.js';
-import taskRoutes from './routes/taskRoutes.js';
+const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
+const dotenv = require('dotenv');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const userRoutes = require('./routes/userRoutes.js');
+const taskRoutes = require('./routes/taskRoutes.js');
 
 dotenv.config();
 

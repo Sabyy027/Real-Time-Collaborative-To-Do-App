@@ -14,6 +14,7 @@ const BoardPage = () => {
   const [tasks, setTasks] = useState([]);
   const [logs, setLogs] = useState([]);
   const [users, setUsers] = useState([]);
+  const [popAnim, setPopAnim] = useState(null); // 'Done', 'In Progress', 'Todo', or null
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -55,25 +56,48 @@ const BoardPage = () => {
     setTasks(prev => prev.map(t => t._id === active.id ? { ...t, status: overContainer } : t));
     try {
       await updateTask(active.id, { status: overContainer });
+      setPopAnim(overContainer);
+      setTimeout(() => setPopAnim(null), 1000);
     } catch (error) {
       console.error("API call to update task FAILED:", error);
       setTasks(tasksBeforeUpdate);
     }
   };
 
+  // Animation JSX for each column
+  const thumbsUp = (
+    <div className="thumbs-up-anim">
+      <span role="img" aria-label="thumbs up">👍</span>
+    </div>
+  );
+  const loadingDots = (
+    <div className="dots-anim" aria-label="loading">
+      <span className="dot"></span>
+      <span className="dot"></span>
+      <span className="dot"></span>
+    </div>
+  );
+  const memoPop = (
+    <div className="memo-anim">
+      <span role="img" aria-label="memo">📝</span>
+    </div>
+  );
+
   return (
     <>
       <button onClick={logout} className="logout-btn">Logout</button>
       <h1>Collaborative To-Do Board</h1>
-      
-      {/* The form is now a standalone element */}
       <CreateTaskForm />
-
-      {/* This container now only holds the board and the log */}
       <div className="board-page-container">
-        <div className="board-wrapper">
+        <div className="board-wrapper" style={{ position: 'relative' }}>
           <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCorners}>
-            <Board tasks={tasks} users={users} />
+            <Board 
+              tasks={tasks} 
+              users={users} 
+              thumbsUp={popAnim === 'Done' ? thumbsUp : null}
+              loadingDots={popAnim === 'In Progress' ? loadingDots : null}
+              memoPop={popAnim === 'Todo' ? memoPop : null}
+            />
           </DndContext>
         </div>
         <ActivityLog logs={logs} />

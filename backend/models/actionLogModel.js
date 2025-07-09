@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const actionLogSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -7,4 +7,4 @@ const actionLogSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 const ActionLog = mongoose.model('ActionLog', actionLogSchema);
-export default ActionLog;
+module.exports = ActionLog;

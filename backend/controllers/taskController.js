@@ -1,6 +1,6 @@
-import Task from '../models/taskModel.js';
-import ActionLog from '../models/actionLogModel.js';
-import User from '../models/userModel.js';
+const Task = require('../models/taskModel.js');
+const ActionLog = require('../models/actionLogModel.js');
+const User = require('../models/userModel.js');
 
 const logAction = async (userId, action, details, io) => {
   try {
@@ -103,4 +103,4 @@ const smartAssignTask = async (req, res) => {
   }
 };
 
-export { getTasks, createTask, updateTask, deleteTask, getActionLogs, smartAssignTask };
+module.exports = { getTasks, createTask, updateTask, deleteTask, getActionLogs, smartAssignTask };

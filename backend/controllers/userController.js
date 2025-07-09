@@ -1,5 +1,5 @@
-import User from '../models/userModel.js';
-import jwt from 'jsonwebtoken';
+const User = require('../models/userModel.js');
+const jwt = require('jsonwebtoken');
 
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
@@ -32,10 +32,9 @@ const loginUser = async (req, res) => {
   }
 };
 
-// New function to get all users
 const getAllUsers = async (req, res) => {
   const users = await User.find({}).select('_id username');
   res.json(users);
 };
 
-export { registerUser, loginUser, getAllUsers };
+module.exports = { registerUser, loginUser, getAllUsers };
