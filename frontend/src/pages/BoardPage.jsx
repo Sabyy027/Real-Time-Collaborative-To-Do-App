@@ -1,25 +1,66 @@
-import React, { useContext } from 'react';
+// --------------------------------------------------
+import React, { useState, useEffect, useContext } from 'react';
+import io from 'socket.io-client';
 import { DndContext, closestCorners } from '@dnd-kit/core';
 import { AuthContext } from '../context/AuthContext';
+import { getTasks, updateTask, getActionLogs, getAllUsers } from '../services/api';
 import Board from '../components/Board';
 import CreateTaskForm from '../components/CreateTaskForm';
 import ActivityLog from '../components/ActivityLog';
 
-// We will add state and API calls in a later phase.
-// For now, this is a placeholder to prevent errors.
-const handleDragEnd = () => {
-    console.log("Drag ended. Logic will be added in a future phase.");
-};
+const socket = io('http://localhost:5000');
 
 const BoardPage = () => {
   const { logout } = useContext(AuthContext);
+  const [tasks, setTasks] = useState([]);
+  const [logs, setLogs] = useState([]);
+  const [users, setUsers] = useState([]);
 
-  // We use static sample data for our static UI phase.
-  const sampleTasks = [
-      { _id: '1', title: 'Design the login page', description: 'Create a wireframe and mockups.', status: 'Todo', priority: 'High', assignedUser: { username: 'Saby' }},
-      { _id: '2', title: 'Set up the database', description: 'Install MongoDB and create schemas.', status: 'In Progress', priority: 'Medium' },
-      { _id: '3', title: 'Deploy to production', description: 'Configure Render and Vercel.', status: 'Done', priority: 'Low', assignedUser: { username: 'John' }},
-  ];
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        const [tasksRes, logsRes, usersRes] = await Promise.all([getTasks(), getActionLogs(), getAllUsers()]);
+        setTasks(tasksRes.data);
+        setLogs(logsRes.data);
+        setUsers(usersRes.data);
+      } catch (error) { console.error("Failed to fetch initial data", error); }
+    };
+    fetchInitialData();
+
+    socket.on('connect', () => console.log('Socket connected!'));
+    socket.on('task_created', (newTask) => setTasks(prev => [...prev, newTask]));
+    socket.on('task_updated', (updatedTask) => setTasks(prev => prev.map(t => t._id === updatedTask._id ? updatedTask : t)));
+    socket.on('task_deleted', (taskId) => setTasks(prev => prev.filter(t => t._id !== taskId)));
+    socket.on('new_log', (newLog) => setLogs(prev => [newLog, ...prev].slice(0, 20)));
+
+    return () => {
+      socket.off('connect');
+      socket.off('task_created');
+      socket.off('task_updated');
+      socket.off('task_deleted');
+      socket.off('new_log');
+    };
+  }, []);
+
+  const handleDragEnd = async (event) => {
+    const { active, over } = event;
+    if (!over) return;
+    let overContainer = over.id;
+    const taskInOverContainer = tasks.find(t => t._id === over.id);
+    if (taskInOverContainer) {
+      overContainer = taskInOverContainer.status;
+    }
+    const originalTask = tasks.find(t => t._id === active.id);
+    if (!originalTask || originalTask.status === overContainer) return;
+    const tasksBeforeUpdate = [...tasks];
+    setTasks(prev => prev.map(t => t._id === active.id ? { ...t, status: overContainer } : t));
+    try {
+      await updateTask(active.id, { status: overContainer });
+    } catch (error) {
+      console.error("API call to update task FAILED:", error);
+      setTasks(tasksBeforeUpdate);
+    }
+  };
 
   return (
     <>
@@ -29,10 +70,10 @@ const BoardPage = () => {
         <div className="board-main-content">
           <CreateTaskForm />
           <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCorners}>
-            <Board tasks={sampleTasks} />
+            <Board tasks={tasks} users={users} />
           </DndContext>
         </div>
-        <ActivityLog />
+        <ActivityLog logs={logs} />
       </div>
     </>
   );

@@ -28,30 +28,16 @@ const AuthForm = ({ isLogin }) => {
         {error && <p className="error-message">{error}</p>}
         <div className="form-group">
           <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+          <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} required />
         </div>
         <div className="form-group">
           <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
         </div>
-        <button type="submit" className="submit-btn">
-          {isLogin ? 'Login' : 'Register'}
-        </button>
+        <button type="submit" className="submit-btn">{isLogin ? 'Login' : 'Register'}</button>
       </form>
     </div>
   );
 };
 
-export default AuthForm; 
+export default AuthForm;
