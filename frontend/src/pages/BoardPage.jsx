@@ -1,4 +1,3 @@
-// --------------------------------------------------
 import React, { useState, useEffect, useContext } from 'react';
 import io from 'socket.io-client';
 import { DndContext, closestCorners } from '@dnd-kit/core';
@@ -66,9 +65,13 @@ const BoardPage = () => {
     <>
       <button onClick={logout} className="logout-btn">Logout</button>
       <h1>Collaborative To-Do Board</h1>
+      
+      {/* The form is now a standalone element */}
+      <CreateTaskForm />
+
+      {/* This container now only holds the board and the log */}
       <div className="board-page-container">
-        <div className="board-main-content">
-          <CreateTaskForm />
+        <div className="board-wrapper">
           <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCorners}>
             <Board tasks={tasks} users={users} />
           </DndContext>
